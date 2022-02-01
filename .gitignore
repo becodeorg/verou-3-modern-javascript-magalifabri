@@ -1,0 +1,5 @@
+.DS_Store
+.vscode
+*.css.map
+notes.md
+node_modules

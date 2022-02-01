@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+
+    <link rel="stylesheet" href="./sass/style.css">
+
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <header>
+        <div class="search-bar">
+            <span class="cursor"></span>
+            <input type="text" value="ghent" placeholder="city name" class="search-input">
+            <button class="search-button">
+                <img src="./images/loupe.png" alt="">
+            </button>
+        </div>
+    </header>
+    
+    <main>
+        <div class="current-weather"> <!-- JS-FILLED -->
+            <p class="summary"></p>
+            <div class="data-wrapper">
+                <img class="big-weather-icon" src="" alt="">
+                <p class="big-temperature-number"><sup>°</sup></p>
+                <ul class="data-list">
+                    <li class="precipitation">
+                        <img class="icon" src="./images/info-icons/rainy.png" alt="">
+                        <span class="number"></span>
+                        <span class="unit">%</span>
+                        <div class="tooltip">probability of precipitation</div>
+                    </li>
+                    <li class="wind">
+                        <img class="icon" src="./images/info-icons/wind.png" alt="">
+                        <span class="number"></span>
+                        <span class="unit">km/h</span>
+                        <div class="tooltip">wind speed in km/h</div>
+                    </li>
+                    <li class="wind-direction">
+                        <img class="icon" src="./images/info-icons/wind-direction.png" alt="">
+                        <img class="arrow" src="./images/right-arrow.png" alt="">
+                        <div class="tooltip">wind direction</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="charts-container">
+                <canvas class="chart temperature"></canvas>
+                <canvas class="chart precipitation hidden"></canvas>
+            </div>
+            <div class="chart-buttons-wrapper">
+                <div class="temperature-chart-button chart-button">temperature</div>
+                <div class="precipitation-chart-button chart-button hidden">precipitation</div>
+            </div>
+        </div>
+
+        <div class="coming-days-bg-cnt">
+            <div class="coming-days">
+                <!-- JS GENERATED -->
+                <div class="day template">
+                    <h2 class="day-name"></h2>
+                    <div class="table">
+                        <div class="info-icons-wrapper">
+                            <!-- <div class="icon-wrapper time">
+                                <img class="icon" src="./images/info-icons/three-o-clock-clock.png">
+                                <div class="tooltip">time of day</div>
+                            </div> -->
+                            <div class="icon-wrapper temp">
+                                <img class="icon" src="./images/info-icons/thermometer.png">
+                                <div class="tooltip">temperature in Celsius</div>
+                            </div>
+                            <div class="icon-wrapper pop">
+                                <img class="icon" src="./images/info-icons/rainy.png">
+                                <div class="tooltip">probability of precipitation</div>
+                            </div>
+                            <div class="icon-wrapper wind">
+                                <img class="icon" src="./images/info-icons/wind.png">
+                                <div class="tooltip">wind speed in km/h</div>
+                            </div>
+                            <div class="icon-wrapper wind-direction">
+                                <img class="icon" src="./images/info-icons/wind-direction.png">
+                                <div class="tooltip">wind direction</div>
+                            </div>
+                        </div>
+                        <!-- TIME SECTION DIVS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>made by Magali Fabri</p>
+        <p>view code on <a href="https://github.com/becodeorg/verou-3-weather-app-magalifabri">GitHub</a></p>
+        <p>photo by <a href="https://unsplash.com/@kenrickmills?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kenrick Mills</a> on <a href="https://unsplash.com/s/photos/sky?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
+        <p>icons from <a href="https://www.flaticon.com/authors/freepik">Freepik</a>, <a href="https://www.flaticon.com/authors/pixel-perfect">Pixel perfect</a>, <a href="https://www.flaticon.com/authors/bqlqn">bqlqn</a>, <a href="https://www.flaticon.com/authors/kmg-design">kmg design</a> and <a href="https://www.flaticon.com/authors/iconixar">iconixar</a> on <a href="https://www.flaticon.com/">flaticon.com</a></p>
+        <p>data from <a href="https://openweathermap.org/forecast5">5 Day / 3 Hour Forecast</a> API and <a href="https://openweathermap.org/api/one-call-api">One Call</a> API from <a href="https://openweathermap.org/">OpenWeather</a></p>
+        <p><a href="https://fonts.google.com/specimen/Dosis">Dosis</a> and <a href="https://fonts.google.com/specimen/Quicksand">Quicksand</a> fonts from <a href="https://fonts.google.com/">Google Fonts</a></p>
+        <p>charts made with <a href="https://www.chartjs.org/">Chart.js</a></p>
+    </footer>
+
+    <script src="./dist/main.js"></script>
+
+</body>
+</html>

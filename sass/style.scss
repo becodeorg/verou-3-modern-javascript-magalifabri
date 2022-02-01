@@ -1,0 +1,108 @@
+/*
+font-family: 'Dosis', sans-serif;
+font-family: 'Quicksand', sans-serif;
+*/
+
+@use "_search-bar";
+@use "_current-weather";
+@use "_coming-days";
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    // border: 1px solid gray;
+}
+
+html {
+    font-size: 1.2rem;
+}
+
+:root {
+    --comingDaysOffsetTop: 0;
+}
+
+.background {
+    z-index: -2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--comingDaysOffsetTop);
+
+    background-image: url("https://images.unsplash.com/photo-1520985244272-9d0b8067a4ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+    background-size: cover;
+    background-position: center top; // anchored to top, because opening the keyboard (on phone) won't affect the viewed portion of the image as much then
+}
+@media only screen and (min-width: 768px) {
+    .background {
+        background-position: center center; // centered, because on bigger screens, otherwise only the top will show, which is somewhat boring
+    }
+}
+
+body {
+    min-width: 350px;
+    margin: 0 auto;
+
+    font-family: 'Dosis', sans-serif;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1,
+h2,
+.search-input,
+.chart-button,
+.summary,
+.tooltip,
+footer {
+    font-family: 'Quicksand', sans-serif;
+}
+
+
+// ERROR MESSAGE
+
+.error-message {
+    color: rgb(255, 125, 125);
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+
+    margin: auto 0;
+}
+
+
+// FOOTER
+
+footer {
+    background: linear-gradient(-90deg, #124856, #185969);
+    border-top: 1px solid #124856;
+    padding: 50px 30px 50px 10vw;
+    & > * + * {
+        margin-top: 20px;
+    }
+    font-size: .8rem;
+
+    a {
+        color: inherit;
+        font-weight: 500;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    }
+}
+
+@media (hover: hover) {
+    a {
+        transition: all .3s ease;
+    }
+    a:hover {
+        color: #fac5b0;
+    }
+    .chart-button:hover {
+        border-color: #fac5b0 !important;
+    }
+}

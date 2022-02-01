@@ -1,0 +1,25 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "## Exercise Description *\"You have been sent abroad for a 10-month work mission. Your family and friends back home ask you about the weather where you live ALL. THE. TIME.* *Enough is enough, you decide to build a small web application for them ...\"* [read more](https://github.com/becodeorg/gnt-verou-3/tree/main/2.The-Hill/03.Weather-App)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becodeorg/verou-3-weather-app-magalifabri.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/becodeorg/verou-3-weather-app-magalifabri/issues"
+  },
+  "homepage": "https://github.com/becodeorg/verou-3-weather-app-magalifabri#readme",
+  "devDependencies": {
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  }
+}

@@ -1,0 +1,92 @@
+header {
+    margin: 40px 0px 40px;
+}
+
+.search-bar {
+    $search-bar-padding-x: 20px;
+
+    position: relative;
+    margin: 0 auto;
+    padding: 0 $search-bar-padding-x;
+    max-width: 350px;
+
+    display: flex;
+    align-items: center;
+
+    .cursor {
+        position: absolute;
+
+        width: 1px;
+        height: 80%;
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 1px;
+        
+        opacity: 0;
+        animation: blink-animation 3s linear infinite;
+        transition: all .3s;
+    }
+
+    .search-input {
+        padding: 5px 40px 5px 5px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        
+        border: none;
+        outline: none;
+        background-color: transparent;
+
+        font-size: 2rem;
+        color: white;
+        text-transform: capitalize;
+    }
+
+    .search-button {
+        cursor: pointer;
+        padding-right: $search-bar-padding-x;
+        position: absolute;
+        right: 0px;
+
+        width: 60px;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        background-color: transparent;
+        border: none;
+        
+        img {
+            height: 50%;
+            filter: invert(1);
+            opacity: .5;
+            transition: all .3s ease;
+            margin-left: auto;
+        }
+
+        &:active {
+            -webkit-tap-highlight-color: transparent;
+            img {
+                opacity: 1;
+            }
+        }
+    }
+}
+@media (hover: hover) {
+    .search-button:hover img {
+        opacity: 1;
+    }
+}
+
+::placeholder {
+    color: lightgray;
+}
+
+@keyframes blink-animation {
+    0% {opacity: 0;};
+    30% {opacity: 0;};
+    50% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}

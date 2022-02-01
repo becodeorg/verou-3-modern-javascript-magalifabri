@@ -1,0 +1,151 @@
+.day-name {
+    margin: 10px 0px 30px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.308);
+    font-weight: 400;
+}
+
+.coming-days-bg-cnt {
+    background: linear-gradient(-90deg,#386f8a, #3f7e9e);
+    border-top: 1px solid #386f8a;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.coming-days {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    .day {
+        &.template {
+            display: none;
+        }
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+        
+        .table {
+            display: flex;
+            flex-direction: column;
+            & > * + * {
+                margin-top: 15px;
+            }
+
+            .time-section {
+                display: flex;
+                flex-direction: row;
+                & > * + * {
+                    margin-left: 10px;
+                }
+                align-items: center;
+                text-align: center;
+
+                & > * {
+                    width: 40px;
+                }
+
+                .wind-direction {
+                    filter: invert(1);
+                    padding: 0 10px;
+                }
+            }
+        }
+    }
+}
+
+.tooltip {
+    user-select: none;
+    position: absolute;
+
+    transition: all .3s;
+    opacity: 0;
+    transform: scale(0);
+
+    z-index: 1;
+    padding: 5px;
+    background-color: rgb(28, 84, 121);
+    border-radius: 5px;
+    font-size: .8rem;
+}
+
+// INFO ICONS & TOOLTIPS
+
+.info-icons-wrapper {
+    margin-left: 100px;
+
+    display: flex;
+    flex-direction: row;
+    & > * + * {
+        margin-left: 10px;
+    }
+    
+    .icon-wrapper {
+        position: relative;
+        width: 40px;
+        padding: 0 5px;
+
+        text-align: center;
+
+        .icon {
+            width: 80%;
+            border-bottom: 1px dotted #002027;
+            padding-bottom: 3px;
+            filter: invert(1);
+        }
+        
+        .tooltip {
+            width: 100px;
+            bottom: 120%;
+            left: 50%;
+            margin-left: -50px;
+            
+            transform-origin: 50% 100%;
+        }
+
+        &:hover .tooltip {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        &.wind-direction .tooltip {
+            margin-left: -70px;
+        }
+    }
+}
+
+// WEATHER ICONS & TOOLTIPS
+
+.weather-icon-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .weather-icon {
+        width: 70%;
+        border-bottom: 1px dotted #002027;
+        padding-bottom: 3px;
+        filter: invert(1);
+    }
+
+    .tooltip {
+        left: 100%;
+        width: max-content;
+        padding: 5px 10px;
+
+        transform-origin: 0% 50%;
+    }
+
+    &:hover .tooltip {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

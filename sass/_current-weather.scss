@@ -1,0 +1,137 @@
+.current-weather {
+    background: linear-gradient(#386f8a36, #65a3c7);
+    background-attachment: fixed;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+
+    max-width: 325px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    padding: 20px;
+
+    font-size: .9rem;
+    font-weight: 500;
+
+    .summary {
+        text-align: center;
+    }
+
+    .data-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        & > * + * {
+            margin-left: 10px;
+        }
+        margin-bottom: 20px;
+        margin-top: 20px;
+
+        .big-weather-icon {
+            height: 65px;
+            filter: invert(1);
+            margin-left: auto;
+        }
+
+        .big-temperature-number {
+            font-size: 5rem;
+            font-weight: lighter;
+            vertical-align: top;
+            margin-right: auto;
+
+            sup {
+                font-size: 2rem;
+            }
+        }
+
+        .data-list {
+            list-style: none;
+
+            li {
+                display: flex;
+                align-items: center;
+                justify-content: left;
+                
+                .icon {
+                    width: 20px;
+                    filter: invert(1);
+                    margin: 5px;
+                }
+
+                &.wind-direction .icon {
+                    width: 25px;
+                }
+
+                .arrow {
+                    width: 20px;
+                    filter: invert(1);
+                }
+
+                .unit {
+                    font-size: .6rem;
+                }
+                
+                &.wind .unit {
+                    margin-left: 3px;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-height: 600px) {
+    .current-weather {
+        background: linear-gradient(#386f8a7e, #65a3c7c4);
+        background-attachment: unset; // on phone, when fixed, background is clipped when nav bar hides while scrolling over background 
+    }
+}
+
+
+// CHARTS
+
+.charts-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.chart {
+    transform: translateX(0px);
+    transition: all .5s ease;
+}
+
+.chart.temperature.hidden {
+    transform: translateX(-100%);
+}
+
+.chart.precipitation {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.hidden {
+        transform: translateX(100%);
+    }
+}
+
+
+// CHART BUTTONS
+
+.chart-buttons-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+
+    .chart-button {
+        border-bottom: 1px solid white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        transition: all .3s;
+        text-transform: capitalize;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        
+        &.hidden {
+            transform: scale(.85);
+            transform-origin: 50% 100%;
+            border-bottom: 1px solid white;
+            text-shadow: none;
+        }
+    }
+}
