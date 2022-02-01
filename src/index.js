@@ -3,6 +3,7 @@
 import dummyOneCallAPIData from "./dummyOneCallAPIData.js";
 import { createCurrentWeatherDiv } from "./current-weather.js";
 import { createComingDaysSection } from "./coming-days.js";
+import "../sass/style.scss";
 
 
 // GLOBAL VARIABLES
