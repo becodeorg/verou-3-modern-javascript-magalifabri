@@ -36,7 +36,7 @@ solution: check where .coming-days starts and set that as the background image's
 */
 const setBgImgHeight = () => {
     const comingDaysBgCnt = document.querySelector(".coming-days-bg-cnt");
-    document.documentElement.style.setProperty("--comingDaysOffsetTop", comingDaysBgCnt.offsetTop + 40 + "px");
+    document.documentElement.style.setProperty("--comingDaysOffsetTop", comingDaysBgCnt.offsetTop + 50 + "px");
 }
 window.onload = setBgImgHeight();
 
