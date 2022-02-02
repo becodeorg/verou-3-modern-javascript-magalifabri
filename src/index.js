@@ -148,15 +148,11 @@ const fetch5day3hourAPIData = async (locationToDisplay) => {
 
 const getUserLocation = async () => {
     let location = false;
-
     let apiKey = 'eb617bdb9e2e2a192a199ff5311d9b78163925f757dfee0bf7bf7e64';
+
     await fetch(`https://api.ipdata.co?api-key=${apiKey}`)
-    // await fetch(`https://ip-api.com/json/`)
         .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            location = data.city;
-        })
+        .then(data => location = data.city)
         .catch((error) => {
             console.error('Error:', error);
         });
