@@ -132,14 +132,13 @@ const fetchOneCallAPIData = async data5d3h => {
 }
 
 
-const fetch5day3hourAPIData = async () => {
+const fetch5day3hourAPIData = async (locationToDisplay) => {
     removeWeekSection();
     removeErrorMessage();
 
-    const searchedLocation = domElems.searchInput.value;
     let data5d3h;
     
-    await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${searchedLocation}&units=metric&appid=${APIkey}`)
+    await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationToDisplay}&units=metric&appid=${APIkey}`)
         .then(response => response.json())
         .then(data => data5d3h = data)
     
@@ -147,9 +146,42 @@ const fetch5day3hourAPIData = async () => {
 };
 
 
-async function processSearch() {
+const getUserLocation = async () => {
+    let location = false;
 
-    const data5d3hAPI = await fetch5day3hourAPIData();
+    await fetch(`http://ip-api.com/json/`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            location = data.city;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    return (location);
+}
+
+
+const getLocationToDisplay = async (isPageLoad) => {
+    let locationToDisplay;
+    if (isPageLoad) {
+        locationToDisplay = await getUserLocation();
+        if (locationToDisplay === false) {
+            locationToDisplay = domElems.searchInput.value;
+        }
+        domElems.searchInput.value = locationToDisplay;
+    } else {
+        locationToDisplay = domElems.searchInput.value;
+    }
+
+    return (locationToDisplay);
+};
+
+
+async function processSearch(isPageLoad = false) {
+    const locationToDisplay = await getLocationToDisplay(isPageLoad);
+    const data5d3hAPI = await fetch5day3hourAPIData(locationToDisplay);
 
     if (data5d3hAPI.cod !== "200") {
         showErrorMsg(data5d3hAPI.message);
@@ -173,9 +205,7 @@ async function processSearch() {
 
 
 // run search without triggering an event to not start with an empty page
-(function entryPoint() {
-    processSearch();
-}());
+window.onload = processSearch(true);
 
 
 // EVENT LISTENERS
