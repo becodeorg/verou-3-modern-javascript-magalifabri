@@ -171,6 +171,8 @@ window.onload = processSearch(true);
 domElems.searchInput.addEventListener("focus", () => {
     domElems.cursor.style.display = "none";
     domElems.searchButtonImg.style.opacity = "1";
+
+    domElems.searchInput.select();
 })
 
 domElems.searchInput.addEventListener("blur", () => {
