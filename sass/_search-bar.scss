@@ -1,5 +1,5 @@
 header {
-    margin: 40px 0px 40px;
+    margin: 40px 20px;
 }
 
 .search-bar {
@@ -27,7 +27,7 @@ header {
     }
 
     .search-input {
-        padding: 5px 40px 5px 5px;
+        padding: 0px 40px 0px 5px;
         left: 0;
         top: 0;
         width: 100%;
@@ -80,7 +80,8 @@ header {
 }
 
 ::placeholder {
-    color: lightgray;
+    color: white;
+    opacity: .5;
 }
 
 @keyframes blink-animation {
