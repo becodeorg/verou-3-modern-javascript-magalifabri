@@ -7,14 +7,14 @@ import { daysOfTheWeek } from "./index.js";
 
 const currentWeatherDOMElems = {
     summaryP: document.querySelector(".summary"),
-    
+
     bigWeatherIcon: document.querySelector(".big-weather-icon"),
     bigTemperatureNumber: document.querySelector(".big-temperature-number"),
-    
+
     precipitationLi: document.querySelector(".data-list .precipitation .number"),
     windLi: document.querySelector(".data-list .wind .number"),
     windDirectionLi: document.querySelector(".data-list .wind-direction .arrow"),
-    
+
     temperatureChart: document.querySelector(".chart.temperature"),
     precipitationChart: document.querySelector(".chart.precipitation"),
 
@@ -55,7 +55,7 @@ const createNewPrecipitationChartJsObj = (dataObj) => {
                 categoryPercentage: 1.0, // ^
                 data: dataObj.precipitationData,
                 backgroundColor: "rgba(255, 255, 255, .3)",
-                
+
                 datalabels: {
                     anchor: "end",
                     align: "top",
@@ -69,7 +69,7 @@ const createNewPrecipitationChartJsObj = (dataObj) => {
                 }
             }]
         },
-        options: { scales: { y: { ticks: { display: false} } } }
+        options: { scales: { y: { ticks: { display: false } } } }
     });
 }
 
@@ -79,7 +79,7 @@ const selectDataForPrecipitationChart = (weatherData) => {
         precipitationData: [],
         timestamps: [],
     };
-    
+
     for (let i = 0; i < 12; i++) {
         dataObj.precipitationData.push(Math.round(weatherData.hourly[i].pop * 100));
         dataObj.timestamps.push(new Date(weatherData.hourly[i].dt * 1000).getHours() + "h");
@@ -114,7 +114,7 @@ const createNewTemperatureChartJsObj = (dataObj) => {
                 fill: true,
                 backgroundColor: "transparent",
                 tension: 0.3, // make line more curvy
-                
+
                 datalabels: {
                     align: "top",
                     padding: {
@@ -127,7 +127,7 @@ const createNewTemperatureChartJsObj = (dataObj) => {
                 }
             }]
         },
-        options: { scales: { y: { ticks: { display: false} } } }
+        options: { scales: { y: { ticks: { display: false } } } }
     });
 }
 
@@ -137,7 +137,7 @@ const selectDataForTemperatureChart = (weatherData) => {
         temperatureData: [],
         timestamps: [],
     };
-    
+
     for (let i = 0; i < 12; i++) {
         dataObj.temperatureData.push(Math.round(weatherData.hourly[i].temp));
         dataObj.timestamps.push(new Date(weatherData.hourly[i].dt * 1000).getHours() + "h");
@@ -165,9 +165,10 @@ const setGlobalChartJsOptions = () => {
     Chart.defaults.scale.grid.drawBorder = false;
     Chart.defaults.scale.ticks.maxRotation = 0;
     Chart.defaults.scale.ticks.maxTicksLimit = 6;
-    Chart.defaults.layout.padding = {top: 30, right: 10, left: 10};
+    Chart.defaults.layout.padding = { top: 30, right: 10, left: 10 };
     Chart.defaults.hover.mode = null;
-;}
+    ;
+}
 
 // fillTemperatureChart HELPER FUNCTIONS
 
@@ -183,7 +184,7 @@ const fillTemperatureChart = (weatherData) => {
 const fillMainDataDiv = (data) => {
     currentWeatherDOMElems.bigWeatherIcon.setAttribute("src", `./images/weather-icons/${data.iconName}.png`);
     currentWeatherDOMElems.bigWeatherIcon.setAttribute("alt", "icon of " + data.description);
-    
+
     currentWeatherDOMElems.bigTemperatureNumber.innerHTML = `${Math.round(data.temperature)}<sup>°</sup>`
 
     currentWeatherDOMElems.precipitationLi.textContent = data.precip | "0";
@@ -200,12 +201,19 @@ const fillSummaryP = (data) => {
         minutes = "0" + minutes;
     }
     const description = data.description;
-    
+
     currentWeatherDOMElems.summaryP.textContent = `${day} ${hours}:${minutes}, ${description}`;
 }
 
 
-export const createCurrentWeatherDiv = (currentWeatherData, allWeatherData) => {
+const fillLocationP = locationInfo => {
+    const location = document.querySelector(".location");
+    location.textContent = `${locationInfo.name}, ${locationInfo.country}`;
+}
+
+
+export const createCurrentWeatherDiv = (locationInfo, currentWeatherData, allWeatherData) => {
+    fillLocationP(locationInfo);
     fillSummaryP(currentWeatherData);
     fillMainDataDiv(currentWeatherData);
     fillTemperatureChart(allWeatherData);

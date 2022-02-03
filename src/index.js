@@ -1,6 +1,7 @@
 // IMPORTS
 
 import dummyOneCallAPIData from "./dummyOneCallAPIData.js";
+import { getLocationInfo } from "./getLocationInfo.js";
 import { createCurrentWeatherDiv } from "./current-weather.js";
 import { createComingDaysSection } from "./coming-days.js";
 import "../sass/style.scss";
@@ -8,7 +9,7 @@ import "../sass/style.scss";
 
 // GLOBAL VARIABLES
 
-const APIkey = "be9f3e7fb99ef3d5a6cdca04ec93f7de";
+export const APIkey = "be9f3e7fb99ef3d5a6cdca04ec93f7de";
 
 export const daysOfTheWeek = [
     "Sunday",
@@ -19,7 +20,8 @@ export const daysOfTheWeek = [
     "Friday",
     "Saturday"
 ]
-const domElems = {
+
+export const domElems = {
     searchInput: document.querySelector(".search-input"),
     mainElem: document.querySelector("main"),
     searchButtonImg: document.querySelector(".search-button img"),
@@ -41,13 +43,12 @@ const setBgImgHeight = () => {
 window.onload = setBgImgHeight();
 
 
-
 const removeWeekSection = () => {
     const days = document.querySelectorAll(".day");
-    
+
     for (const day of days) {
         if (day.classList.contains("template")) {
-            continue ;
+            continue;
         }
         day.remove();
     }
@@ -68,34 +69,17 @@ const showErrorMsg = msg => {
     const errorMsg = document.createElement("p");
     errorMsg.classList.add("error-message");
     errorMsg.textContent = msg;
-    
+
     document.body.insertBefore(errorMsg, document.body.children[2]);
-    
+
     domElems.mainElem.style.display = "none";
-}
-
-
-const parseOneCallAPIData = weatherData => {
-    const currentWeatherData = [];
-    
-    currentWeatherData["summary"] = weatherData.current.weather[0].main;
-    currentWeatherData["description"] = weatherData.current.weather[0].description;
-    currentWeatherData["dateObject"] = new Date(weatherData.current.dt * 1000);
-    currentWeatherData["temperature"] = weatherData.current.temp;
-    currentWeatherData["humidity"] = weatherData.current.humidity;
-    currentWeatherData["precip"] = weatherData.current.pop;
-    currentWeatherData["iconName"] = weatherData.current.weather[0].icon;
-    currentWeatherData["wind-speed"] = weatherData.current.wind_speed; // meter/sec
-    currentWeatherData["wind-direction"] = weatherData.current.wind_deg;
-
-    return (currentWeatherData);
 }
 
 
 const parse5day3hourAPIData = weatherData => {
     if (weatherData.cod !== "200") {
         showErrorMsg(weatherData.message);
-        return ;
+        return;
     }
 
     const comingDaysData = [];
@@ -119,12 +103,38 @@ const parse5day3hourAPIData = weatherData => {
 }
 
 
-const fetchOneCallAPIData = async data5d3h => {
-    let dataOneCallAPI;
-    const lat = data5d3h.city.coord.lat;
-    const lon = data5d3h.city.coord.lon;
+const fetch5day3hourAPIData = async (locationToDisplay) => {
+    let data5d3h;
 
-    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${APIkey}`)
+    await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${locationToDisplay.lat}&lon=${locationToDisplay.lon}&appid=${APIkey}`)
+        .then(response => response.json())
+        .then(data => data5d3h = data)
+
+    return (data5d3h);
+};
+
+
+const parseOneCallAPIData = weatherData => {
+    const currentWeatherData = [];
+
+    currentWeatherData["summary"] = weatherData.current.weather[0].main;
+    currentWeatherData["description"] = weatherData.current.weather[0].description;
+    currentWeatherData["dateObject"] = new Date(weatherData.current.dt * 1000);
+    currentWeatherData["temperature"] = weatherData.current.temp;
+    currentWeatherData["humidity"] = weatherData.current.humidity;
+    currentWeatherData["precip"] = weatherData.current.pop;
+    currentWeatherData["iconName"] = weatherData.current.weather[0].icon;
+    currentWeatherData["wind-speed"] = weatherData.current.wind_speed; // meter/sec
+    currentWeatherData["wind-direction"] = weatherData.current.wind_deg;
+
+    return (currentWeatherData);
+}
+
+
+const fetchOneCallAPIData = async searchedLocation => {
+    let dataOneCallAPI;
+
+    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${searchedLocation.lat}&lon=${searchedLocation.lon}&units=metric&appid=${APIkey}`)
         .then(response => response.json())
         .then(data => dataOneCallAPI = data);
 
@@ -132,71 +142,21 @@ const fetchOneCallAPIData = async data5d3h => {
 }
 
 
-const fetch5day3hourAPIData = async (locationToDisplay) => {
+const processSearch = async (isPageLoad = false) => {
     removeWeekSection();
     removeErrorMessage();
 
-    let data5d3h;
-    
-    await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${locationToDisplay}&units=metric&appid=${APIkey}`)
-        .then(response => response.json())
-        .then(data => data5d3h = data)
-    
-        return (data5d3h);
-};
-
-
-const getUserLocation = async () => {
-    let location = false;
-    let apiKey = 'eb617bdb9e2e2a192a199ff5311d9b78163925f757dfee0bf7bf7e64';
-
-    await fetch(`https://api.ipdata.co?api-key=${apiKey}`)
-        .then(response => response.json())
-        .then(data => location = data.city)
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
-    return (location);
-}
-
-
-const getLocationToDisplay = async (isPageLoad) => {
-    let locationToDisplay;
-    if (isPageLoad) {
-        locationToDisplay = await getUserLocation();
-        if (locationToDisplay === false) {
-            locationToDisplay = domElems.searchInput.value;
-        }
-        domElems.searchInput.value = locationToDisplay;
-    } else {
-        locationToDisplay = domElems.searchInput.value;
+    const searchedLocationInfo = await getLocationInfo(isPageLoad);
+    if (searchedLocationInfo.error) {
+        showErrorMsg(searchedLocationInfo.error);
+        return;
     }
 
-    return (locationToDisplay);
-};
-
-
-async function processSearch(isPageLoad = false) {
-    const locationToDisplay = await getLocationToDisplay(isPageLoad);
-    const data5d3hAPI = await fetch5day3hourAPIData(locationToDisplay);
-
-    if (data5d3hAPI.cod !== "200") {
-        showErrorMsg(data5d3hAPI.message);
-        return ;
-    }
-
-    const dataOneCallAPI = await fetchOneCallAPIData(data5d3hAPI);
+    const dataOneCallAPI = await fetchOneCallAPIData(searchedLocationInfo);
     const currentWeatherData = parseOneCallAPIData(dataOneCallAPI);
-    
-    // TESTING ---
-    // const useDummyOneCallAPIData = false;
-    // const currentWeatherData = useDummyOneCallAPIData ?
-    // parseOneCallAPIData(dummyOneCallAPIData) :
-    // parseOneCallAPIData(dataOneCallAPI);
-    // ---
-    
-    createCurrentWeatherDiv(currentWeatherData, dataOneCallAPI);
+    createCurrentWeatherDiv(searchedLocationInfo, currentWeatherData, dataOneCallAPI);
+
+    const data5d3hAPI = await fetch5day3hourAPIData(searchedLocationInfo);
     const comingDaysData = parse5day3hourAPIData(data5d3hAPI);
     createComingDaysSection(comingDaysData);
 };
