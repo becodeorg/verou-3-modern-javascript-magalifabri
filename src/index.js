@@ -34,11 +34,11 @@ export const domElems = {
 /*
 issue: background image behind .search-bar and .current-weather needs to reach until .coming-days because of parallax
 using `height: 100vh` isn't enough on viewports with a height < .search-bar + .current-weather
-solution: check where .coming-days starts and set that as the background image's height
+solution: check where .coming-days starts and set that as the background image's height + a little extra, as JS seems to underestimate offsetTop
 */
 const setBgImgHeight = () => {
     const comingDaysBgCnt = document.querySelector(".coming-days-bg-cnt");
-    document.documentElement.style.setProperty("--comingDaysOffsetTop", comingDaysBgCnt.offsetTop + 50 + "px");
+    document.documentElement.style.setProperty("--comingDaysOffsetTop", comingDaysBgCnt.offsetTop + 100 + "px");
 }
 window.onload = setBgImgHeight();
 
