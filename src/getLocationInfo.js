@@ -3,7 +3,7 @@ import { APIkey, domElems } from "./index.js";
 const getCoordinates = async location => {
     let error = false;
 
-    await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location.city}&appid=${APIkey}`)
+    await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location.city}&appid=${APIkey}`)
         .then(response => response.json())
         .then(data => {
             location.lat = data[0].lat;
